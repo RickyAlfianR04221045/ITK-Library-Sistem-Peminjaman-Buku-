@@ -15,18 +15,11 @@ class Buku(
     private val judul: String,
     private var stok: Int
 ) {
-    fun getJudul(): String {
-        return judul
-    }
-
-    fun getStok(): Int {
-        return stok
-    }
+    fun getJudul(): String = judul
+    fun getStok(): Int = stok
 
     fun kurangiStok() {
-        if (stok > 0) {
-            stok--
-        }
+        if (stok > 0) stok--
     }
 
     fun tambahStok() {
@@ -41,27 +34,23 @@ class Anggota(
     private var jumlahPinjam: Int = 0
     private var statusDenda: Boolean = false
 
-    fun getNama(): String {
-        return nama
-    }
-
     fun setDenda(status: Boolean) {
         statusDenda = status
     }
 
     fun pinjamBuku(buku: Buku) {
-        println("\n$nama mencoba meminjam buku: ${buku.getJudul()}")
+        println("\n$nama mencoba meminjam: ${buku.getJudul()}")
 
         if (statusDenda) {
-            println("❌ Peminjaman ditolak: Masih ada denda")
+            println("❌ Ditolak: Masih ada denda")
         } else if (jumlahPinjam >= 3) {
-            println("❌ Peminjaman ditolak: Maksimal 3 buku")
+            println("❌ Ditolak: Maksimal 3 buku")
         } else if (buku.getStok() == 0) {
-            println("❌ Peminjaman ditolak: Stok buku habis")
+            println("❌ Ditolak: Stok habis")
         } else {
             buku.kurangiStok()
             jumlahPinjam++
-            println("✅ Peminjaman berhasil")
+            println("✅ Berhasil meminjam")
         }
     }
 
@@ -69,9 +58,7 @@ class Anggota(
         if (jumlahPinjam > 0) {
             buku.tambahStok()
             jumlahPinjam--
-            println("📚 Buku berhasil dikembalikan: ${buku.getJudul()}")
-        } else {
-            println("⚠️ Tidak ada buku yang dipinjam")
+            println("📚 Buku dikembalikan: ${buku.getJudul()}")
         }
     }
 }
@@ -80,32 +67,26 @@ class Pustakawan(
     private val id: Int,
     private val nama: String
 ) {
-    fun kelolaBuku() {
-        println("Pustakawan $nama sedang mengelola data buku")
+    fun kelola() {
+        println("Pustakawan $nama mengelola buku")
     }
 }
 
 fun main() {
-    // Data buku
     val buku1 = Buku(1, "Pemrograman Kotlin", 2)
     val buku2 = Buku(2, "Struktur Data", 1)
 
-    // Data anggota
-    val anggota1 = Anggota(1, "Ricky Alfian Ronaldo")
+    val anggota = Anggota(1, "Ricky Alfian Ronaldo")
 
-    // Simulasi peminjaman
-    anggota1.pinjamBuku(buku1)
-    anggota1.pinjamBuku(buku1)
-    anggota1.pinjamBuku(buku1) // gagal (stok habis / batas pinjam)
+    anggota.pinjamBuku(buku1)
+    anggota.pinjamBuku(buku1)
+    anggota.pinjamBuku(buku1)
 
-    // Simulasi denda
-    anggota1.setDenda(true)
-    anggota1.pinjamBuku(buku2) // gagal (ada denda)
+    anggota.setDenda(true)
+    anggota.pinjamBuku(buku2)
 
-    // Pengembalian buku
-    anggota1.setDenda(false)
-    anggota1.kembalikanBuku(buku1)
+    anggota.setDenda(false)
+    anggota.kembalikanBuku(buku1)
 
-    // Peminjaman lagi
-    anggota1.pinjamBuku(buku2)
+    anggota.pinjamBuku(buku2)
 }
