@@ -42,15 +42,15 @@ class Anggota(
         println("\n$nama mencoba meminjam: ${buku.getJudul()}")
 
         if (statusDenda) {
-            println("❌ Ditolak: Masih ada denda")
+            println("Peminjaman ditolak: Masih ada denda")
         } else if (jumlahPinjam >= 3) {
-            println("❌ Ditolak: Maksimal 3 buku")
+            println("Peminjaman ditolak: Maksimal 3 buku")
         } else if (buku.getStok() == 0) {
-            println("❌ Ditolak: Stok habis")
+            println("Peminjaman ditolak: Stok habis")
         } else {
             buku.kurangiStok()
             jumlahPinjam++
-            println("✅ Berhasil meminjam")
+            println("Peminjaman berhasil")
         }
     }
 
@@ -58,7 +58,7 @@ class Anggota(
         if (jumlahPinjam > 0) {
             buku.tambahStok()
             jumlahPinjam--
-            println("📚 Buku dikembalikan: ${buku.getJudul()}")
+            println("Buku dikembalikan: ${buku.getJudul()}")
         }
     }
 }
@@ -66,11 +66,7 @@ class Anggota(
 class Pustakawan(
     private val id: Int,
     private val nama: String
-) {
-    fun kelola() {
-        println("Pustakawan $nama mengelola buku")
-    }
-}
+)
 
 fun main() {
     val buku1 = Buku(1, "Pemrograman Kotlin", 2)
